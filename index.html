@@ -61,19 +61,19 @@ document.addEventListener("visibilitychange", () => {
           <a href="index.html">
             <center>
                 <nav>
-                    <img src="../images/logo.png" alt="JA | TWELVE" id="logo" class="logo animated">
+                    <img src="images/logo.png" alt="JA | TWELVE" id="logo" class="logo animated">
                   </nav>
             </center>
           </a>
           <h2 class="chats">Chats</h2>
           <ul id="contact-list">
             <li class="contact-item" id="contact-1">
-              <img src="../images/pfp/12.png" alt="Profile Pic" class="profile-pic">
+              <img src="images/pfp/12.png" alt="Profile Pic" class="profile-pic">
               <span class="display-name">Twelve</span>
             </li>
             <div class="sidebar-buttons">
               <button id="clearChatsBtn" onclick="module.clearChats()">🗑</button>
-              <a href="../upload/index.html" target="_blank">
+              <a href="upload/index.html" target="_blank">
                 <button class="sendmedia">Send Media</button>
               </a>
             </div>
@@ -88,7 +88,7 @@ document.addEventListener("visibilitychange", () => {
         <div class="chat-area">
           <div class="chat-header" id="chatHeader">
             <div class="header-info">
-              <img src="../images/pfp/12.png" alt="Profile Pic" class="profile-pic-small" id="profilePicSmall">
+              <img src="images/pfp/12.png" alt="Profile Pic" class="profile-pic-small" id="profilePicSmall">
               <div class="name-and-status">
                 <span class="nameuser" contenteditable="true" onclick="editName()" onblur="saveName()" id="userName">Twelve</span>
               </div>
@@ -124,8 +124,8 @@ document.addEventListener("visibilitychange", () => {
     
     
     
-    <audio id="sendAudio" src="../send.mp3" preload="auto"></audio>
-    <audio id="receiveAudio" src="../receive.mp3" preload="auto"></audio>
+    <audio id="sendAudio" src="send.mp3" preload="auto"></audio>
+    <audio id="receiveAudio" src="receive.mp3" preload="auto"></audio>
     <script>
         module = {};
     </script>
@@ -285,7 +285,7 @@ module.dltMsg = function dltMsg(key) {
     deleteModal.style.display = 'block';
 
     // Play the open sound
-    const openAudio = new Audio('../open.mp3');
+    const openAudio = new Audio('open.mp3');
     openAudio.play();
 
     const confirmDeleteBtn = document.getElementById('confirmDelete');
@@ -301,7 +301,7 @@ module.dltMsg = function dltMsg(key) {
             });
 
         // Play the click sound
-        const clickAudio = new Audio('../click.mp3');
+        const clickAudio = new Audio('click.mp3');
         clickAudio.play();
 
         deleteModal.style.display = 'none';
@@ -311,7 +311,7 @@ module.dltMsg = function dltMsg(key) {
         deleteModal.style.display = 'none';
 
         // Play the close sound
-        const closeAudio = new Audio('../close.mp3');
+        const closeAudio = new Audio('close.mp3');
         closeAudio.play();
     };
 
@@ -320,7 +320,7 @@ module.dltMsg = function dltMsg(key) {
             deleteModal.style.display = 'none';
 
             // Play the close sound
-            const closeAudio = new Audio('../close.mp3');
+            const closeAudio = new Audio('close.mp3');
             closeAudio.play();
         }
     };
@@ -374,14 +374,14 @@ onChildAdded(ref(db, "messages"), (data) => {
 
     if (!isActive) {
         // Play open.mp3 when the sidebar is opened
-        const openAudio = new Audio('../open.mp3');
+        const openAudio = new Audio('open.mp3');
         openAudio.play();
 
         // Add the outside click listener
         document.addEventListener('click', closeSidebarOnClickOutside);
     } else {
         // Play close.mp3 when the sidebar is closed
-        const closeAudio = new Audio('../close.mp3');
+        const closeAudio = new Audio('close.mp3');
         closeAudio.play();
 
         // Remove the outside click listener
@@ -398,7 +398,7 @@ function closeSidebarOnClickOutside(event) {
         sidebar.classList.remove('active'); // Close the sidebar
 
         // Play close.mp3 when the sidebar is closed
-        const closeAudio = new Audio('../close.mp3');
+        const closeAudio = new Audio('close.mp3');
         closeAudio.play();
 
         // Remove the event listener to prevent multiple bindings
@@ -503,7 +503,6 @@ const module = {
 };
 
     </script>
-    <script src="../js/block.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const input = document.querySelector('input');
