@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="messages"></div>
+
+    <div id="sendMsg">
+        <input type="text" id="msgTxt" placeholder="ENTER YOUR MSG...">
+        <input type="submit" id="msgBtn" value="send" onclick="module.sendMsg()">
+    </div>
+
+    <script>
+        module = {};
+    </script>
+    <script type="module"> 
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+        import { getDatabase, ref, set, remove, onChildAdded, onChildRemoved } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-analytics.js";
+        
+        const firebaseConfig = {
+          apiKey: "AIzaSyDNPml6XWpfjBhUgzThRt6nRjGd8Mfm0Lg",
+          authDomain: "mystic-chat-9ed3a.firebaseapp.com",
+          projectId: "mystic-chat-9ed3a",
+          storageBucket: "mystic-chat-9ed3a.appspot.com",
+          messagingSenderId: "443059835896",
+          appId: "1:443059835896:web:015c8b16e84c5b6ebdbc0d",
+          measurementId: "G-WHSMTCG093"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const analytics = getAnalytics(app);
+
+         // variables
+         var msgTxt = document.getElementById('msgTxt');
+        var sender;
+        if(sessionStorage.getItem('sender')){
+            sender = sessionStorage.getItem('sender');
+        } else {
+            sender = prompt('PLEASE ENTER YOUR NAME');
+            sessionStorage.setItem('sender',sender);
+        }
+
+        // TO SEND MESSAGES
+        module.sendMsg = function sendMsg(){
+            var msg = msgTxt.value;
+            var timestamp = new Date().getTime();
+            set(ref(db,"messages/"+timestamp),{
+                msg : msg,
+                sender : sender
+            })
+
+            msgTxt.value="";
+        }
+
+        // TO RECEIVE MSG
+        onChildAdded(ref(db,"messages"), (data)=>{
+            if(data.val().sender == sender){
+                messages.innerHTML += "<div style=justify-content:end class=outer id="+data.key+"><div id=inner class=me>you : "+data.val().msg+"<button id=dltMsg onclick=module.dltMsg("+data.key+")>DELETE</button></div></div>";
+            } else {
+                messages.innerHTML += "<div class=outer id="+data.key+"><div id=inner class=notMe>"+data.val().sender+" : "+data.val().msg+"</div></div>";
+            }
+        })
+
+        // TO DELETE MSG
+        module.dltMsg = function dltMsg(key){
+            remove(ref(db,"messages/"+key));
+        }
+
+        // WHEN MSG IS DELETED
+        onChildRemoved(ref(db,"messages"),(data)=>{
+            var msgBox = document.getElementById(data.key);
+            messages.removeChild(msgBox);
+        })
+      </script>
+</body>
+</html>
